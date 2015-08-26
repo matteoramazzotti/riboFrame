@@ -1,16 +1,17 @@
-Program installation
+riboFrame pipeline installation
 
-What will follow here has been tested on Ubuntu Thrusty Tahr only.
+What will follow here has been tested on Ubuntu 14.04 (Thrusty Tahr) only.
 
-The package riboFrame is composed by two perl scripts, riboTrap.pl and riboMap.pl that can be downloaded from the link above. A minimal Perl installation is sufficient and needed for the scripts to work.
+The package riboFrame is composed by two perl scripts, riboTrap.pl and riboMap.pl.
+A minimal Perl installation is sufficient and needed for the scripts to work.
 
 Two other programs are required, that constitute the working ground of the riboFrame scripts:
 
     Eddy's HMMER3 (hmmer.janelia.org)
     RDP's RDPclassifier (rdp.cme.msu.edu)
 
-HMMER3 should be in your distro's repositories and can be easily installed with your package manager. Then you will have HMMER compiled binaries, among which hmmsearch. 
-RDPclassifier can be obtained from http://sourceforge.net/projects/rdp-classifier/ . We will use the java jar file RDPclassifier[...].jar
+HMMER3 should be in your distro's repositories and can be easily installed with your package manager. Then you will have the complete HMMER suite of programs, among which hmmsearch. 
+RDPclassifier can be obtained from http://sourceforge.net/projects/rdp-classifier/ . In the folder tree creaded after unzipping the archive, locate classifier.jar, that will be used in the riboFrame pipeline
 
 Lastly, you will have to download the Hidden Markov Models of the 16S gene for bacteria and archea form this repository and store to some desired location.
 
