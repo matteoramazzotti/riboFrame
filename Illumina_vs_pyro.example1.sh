@@ -1,3 +1,9 @@
+#(c) matteo.ramazzotti@unifi.it - example script for riboFrame
+# this script draws the full riboFrame pipeline for the HMP sample SRS011061 form reads download to comparison of 
+# abundance profiles between Illumina WGS riboFrame processed data and pyrosequencing data.
+# WARNING: serveral Gb of data are taken from the network!!!
+# riboTrap.pl, riboMap.pl, hmmsearch must be in path. Please point classifier.jar in appropriate folder according to user's setup
+
 mkdir SRS011061
 #sample runs at SRA can be found with
 #perl SRS2SRR.pl SRS011061
@@ -29,7 +35,6 @@ egrep -A1 -e "^@.+/[2]\$" SRS011061/SRS011061.denovo_duplicates_marked.trimmed.s
 
 rm SRS011061/*.fastq
  
-#sample SRS011061
 hmmsearch -E 0.00001 --domtblout SRS011061/ilmn.1.fwd.bact.ribosomal.table --noali --cpu 2 -o /dev/null hmms/16s_bact_for3.hmm SRS011061/ilmn.1.fasta
 hmmsearch -E 0.00001 --domtblout SRS011061/ilmn.1.rev.bact.ribosomal.table --noali --cpu 2 -o /dev/null hmms/16s_bact_rev3.hmm SRS011061/ilmn.1.fasta
 hmmsearch -E 0.00001 --domtblout SRS011061/ilmn.1.fwd.arch.ribosomal.table --noali --cpu 2 -o /dev/null hmms/16s_arch_for3.hmm SRS011061/ilmn.1.fasta 
