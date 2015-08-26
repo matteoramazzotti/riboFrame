@@ -79,7 +79,7 @@ rm SRS011061/*.fasta
 riboMap.pl file=SRS011061/pyro_v1v3.rdp ori=454 var=full conf=0.8 cross=over percmin=0.5 covplot=0 abuplot=0 out=SRS011061/pyro_v1v3_count
 riboMap.pl file=SRS011061/pyro_v3v5.rdp ori=454 var=full conf=0.8 cross=over percmin=0.5 covplot=0 abuplot=0 out=SRS011061/pyro_v3v5_count
 
-sed 's/xxxxx/SRS011061/g' autoplot.general.R > SRS011061/autoplot.SRS011061.R
-nohup R --slave --vanilla < SRS011061/autoplot.SRS011061.R
+sed 's/xxxxx/SRS011061/g' compare.general.R > SRS011061/compare.SRS011061.R
+nohup R --slave --vanilla < SRS011061/compare.SRS011061.R
 mv nohup.out SRS011061/results.txt
 
