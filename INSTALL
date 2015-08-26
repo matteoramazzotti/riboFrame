@@ -15,4 +15,4 @@ RDPclassifier can be obtained from http://sourceforge.net/projects/rdp-classifie
 
 Lastly, you will have to download the Hidden Markov Models of the 16S gene for bacteria and archea form this repository and store to some desired location.
 
-Thta's all, take a look at file GUIDE.txt for a complete guide to riboFrame or at EXAMPLE.txt for an example run of riboFrame
+Thta's all, take a look at file HOWTO for a complete guide to riboFrame or at the various example files (e.g. 
