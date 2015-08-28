@@ -4,7 +4,6 @@
 # WARNING: serveral Gb of data are taken from the network!!!
 # riboTrap.pl, riboMap.pl, hmmsearch must be in path. Please point classifier.jar in appropriate folder according to user's setup
 
-mkdir SRS011061
 #sample runs at SRA can be found with
 #perl SRS2SRR.pl SRS011061
 #Sample SRS011061: 6 experiments (25437 25436 22138 22137 22119 22118 )
@@ -24,6 +23,7 @@ mkdir SRS011061
 
 #SRA reports that for WGS "The SRA run(s) below have been pre-filtered by NCBI to remove contaminating human sequence."
 #hmpdacc actually have indexed the WGS data, so SRA is not needed for WGS...
+
 mkdir SRS011061
 wget -O SRS011061/SRS011061.tar.bz2 http://downloads.hmpdacc.org/data/Illumina/stool/SRS011061.tar.bz2
 tar -xjvf SRS011061/SRS011061.tar.bz2
@@ -34,7 +34,8 @@ egrep -A1 -e "^@.+/[1]\$" SRS011061/SRS011061.denovo_duplicates_marked.trimmed.s
 egrep -A1 -e "^@.+/[2]\$" SRS011061/SRS011061.denovo_duplicates_marked.trimmed.singleton.fastq | tr "@" ">" | grep -v "^--" >> SRS011061/ilmn.2.fasta
 
 rm SRS011061/*.fastq
- 
+
+#sample SRS011061
 hmmsearch -E 0.00001 --domtblout SRS011061/ilmn.1.fwd.bact.ribosomal.table --noali --cpu 2 -o /dev/null hmms/16s_bact_for3.hmm SRS011061/ilmn.1.fasta
 hmmsearch -E 0.00001 --domtblout SRS011061/ilmn.1.rev.bact.ribosomal.table --noali --cpu 2 -o /dev/null hmms/16s_bact_rev3.hmm SRS011061/ilmn.1.fasta
 hmmsearch -E 0.00001 --domtblout SRS011061/ilmn.1.fwd.arch.ribosomal.table --noali --cpu 2 -o /dev/null hmms/16s_arch_for3.hmm SRS011061/ilmn.1.fasta 
@@ -82,4 +83,3 @@ riboMap.pl file=SRS011061/pyro_v3v5.rdp ori=454 var=full conf=0.8 cross=over per
 sed 's/xxxxx/SRS011061/g' compare.general.R > SRS011061/compare.SRS011061.R
 nohup R --slave --vanilla < SRS011061/compare.SRS011061.R
 mv nohup.out SRS011061/results.txt
-
