@@ -1,6 +1,6 @@
 riboFrame pipeline installation
 
-What will follow here has been tested on Ubuntu 14.04 (Thrusty Tahr) only.
+What will follow here has been tested on Ubuntu 14.04 only, but we use just basic commands so we are pretty sure that every linux OS can be used.
 
 The package riboFrame is composed by two perl scripts, riboTrap.pl and riboMap.pl.
 A minimal Perl installation is sufficient and needed for the scripts to work.
@@ -10,9 +10,12 @@ Two other programs are required, that constitute the working ground of the riboF
     Eddy's HMMER3 (hmmer.janelia.org)
     RDP's RDPclassifier (rdp.cme.msu.edu)
 
-HMMER3 should be in your distro's repositories and can be easily installed with your package manager. Then you will have the complete HMMER suite of programs, among which hmmsearch. 
+HMMER3 should be in your distro's repositories and can be easily installed with your package manager. Then you will have the complete HMMER suite of programs, among which hmmsearch, that is the program we are interested in. 
+
 RDPclassifier can be obtained from http://sourceforge.net/projects/rdp-classifier/ . In the folder tree creaded after unzipping the archive, locate classifier.jar, that will be used in the riboFrame pipeline
 
-Lastly, you will have to download the Hidden Markov Models of the 16S gene for bacteria and archea form this repository and store to some desired location.
+The Hidden Markov Models of the 16S gene for bacteria and archea are stored in the "hmms" folder. They will be needed for finding genes belonginh to the 16S gene.
 
-Thta's all, take a look at file HOWTO for a complete guide to riboFrame or at the various example files (e.g. 
+Thta's all, take a look at file HOWTO for a complete guide to riboFrame. 
+
+We have set up a number of examples that should help you in following our pipeline, you can find them in the "examples" folder. From there you will learn how to download (huge) metagenomics datasets from the Human Microbiome Project or by NCBI Sequence Read Archive and feed our procedure with them.
