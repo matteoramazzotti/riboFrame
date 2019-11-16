@@ -3,9 +3,9 @@
 # (c) matteo.ramazzotti@unifi.it
 # part of the riboFrame v1.0 package
 
-$ver = '20150820';
+$ver = '20191116';
 
-# WARNINNG: THIS SCRIPT ASSUMES THAT SEQUENCES ARE WRITTEN IN JUST 1 LINE
+# WARNINNG: THIS SCRIPT ASSUMES THAT SEQUENCES ARE WRITTEN IN JUST 1 LINE AFTER THE HEADER
 if (!$ARGV[0]) {
 	print "\n----------- riboTrap ---------\n------- riboFrame v1.0 -------\n------- rev.  $ver --------\n(c) matteo.ramazzotti\@unifi.it\n\n";
 	print "USAGE: riboTrap.pl sample1 [sample2] [sample3] ... [sampleN] [nopair]\n\n";
@@ -163,6 +163,7 @@ foreach $sam (@samples) {
 			$name =~ s/>//;
 			$name =~ s/ .+//; # this is because hmmsearch cuts fasta headers at the first space as blast...
 			$name =~ s/\/1//;
+			$name =~ s/ +$//;
 			$ok = 0;
 			next if (!$flagb{$name} && !$flaga{$name});
 #			next if (($flagb{$name} && $flaga{$name})); # the same read is attributed to both archea and bacteria, this is not good...
@@ -243,6 +244,7 @@ foreach $sam (@samples) {
 				$name = $_;
 				$name =~ s/>//;
 				$name =~ s/\/2//;
+				$name =~ s/ +$//;
 				$ok = 0;
 				next if (!$flagb{$name} && !$flaga{$name});
 	#			next if (($flagb{$name} && $flaga{$name})); # the same read is attributed to both archea and bacteria, this is not good...
