@@ -1,1 +1,42 @@
+#Tested on Ubuntu 20.04
 
+#environment preparation
+git clone https://github.com/matteoramazzotti/riboFrame
+sudo apt update
+apt install hmmer axel
+#go to https://sourceforge.net/projects/rdp-classifier/files/latest/download
+unzip rdp_classifier_2.14.zip
+
+#download of data from HMP
+mkdir samples
+cd samples
+axel -n 10 http://downloads.hmpdacc.org/data/Illumina/stool/SRS011061.tar.bz2
+tar -xjf SRS011061.tar.bz2
+cd ..
+
+#extract and split fastas
+grep -A1 -E "^@.+\/1$" SRS011061/SRS011061.denovo_duplicates_marked.trimmed.1.fastq | grep -v -e "--" | sed 's/^@/>/' > samples/SRS011061.1.fasta
+grep -A1 -E "^@.+\/2$" SRS011061/SRS011061.denovo_duplicates_marked.trimmed.2.fastq | grep -v -e "--" | sed 's/^@/>/' > samples/SRS011061.2.fasta
+
+#catch ribosomal reads with hmmer
+hmmsearch -E 0.00001 --domtblout samples/SRS011061.1.fwd.bact.ribosomal.table --noali --cpu 4 -o /dev/null hmms/16S_bact_for3.hmm samples/SRS011061.1.fasta
+hmmsearch -E 0.00001 --domtblout samples/SRS011061.1.rev.bact.ribosomal.table --noali --cpu 4 -o /dev/null hmms/16S_bact_rev3.hmm samples/SRS011061.1.fasta
+hmmsearch -E 0.00001 --domtblout samples/SRS011061.1.fwd.arch.ribosomal.table --noali --cpu 4 -o /dev/null hmms/16S_arch_for3.hmm samples/SRS011061.1.fasta
+hmmsearch -E 0.00001 --domtblout samples/SRS011061.1.rev.arch.ribosomal.table --noali --cpu 4 -o /dev/null hmms/16S_arch_rev3.hmm samples/SRS011061.1.fasta
+
+hmmsearch -E 0.00001 --domtblout samples/SRS011061.2.fwd.bact.ribosomal.table --noali --cpu 4 -o /dev/null hmms/16S_bact_for3.hmm samples/SRS011061.2.fasta
+hmmsearch -E 0.00001 --domtblout samples/SRS011061.2.rev.bact.ribosomal.table --noali --cpu 4 -o /dev/null hmms/16S_bact_rev3.hmm samples/SRS011061.2.fasta
+hmmsearch -E 0.00001 --domtblout samples/SRS011061.2.fwd.arch.ribosomal.table --noali --cpu 4 -o /dev/null hmms/16S_arch_for3.hmm samples/SRS011061.2.fasta
+hmmsearch -E 0.00001 --domtblout samples/SRS011061.2.rev.arch.ribosomal.table --noali --cpu 4 -o /dev/null hmms/16S_arch_rev3.hmm samples/SRS011061.2.fasta
+
+#aggregate 16S reads and plot the 16S coverage profile
+perl riboTrap.pl samples/SRS011061 covplot=1
+
+#classify 16S reads
+java -Xmx1g -jar rdp_classifier_2.14/dist/classifier.jar -q samples/SRS011061.16S.fasta -o samples/SRS011061.16S.rdp
+
+#analyze reads and create abundance analysis (some examples)
+perl riboMap.pl file=samples/SRS011061.16S.rdp var=full conf=0.8 cross=over percmin=0.5 covplot=1 outplot=1 out=samples/SRS011061.ab_full
+perl riboMap.pl file=samples/SRS011061.16S.rdp var=all conf=0.8 cross=over percmin=0.5 tol=10% covplot=1 outplot=1 out=samples/SRS011061.ab_all
+perl riboMap.pl file=samples/SRS011061.16S.rdp var=V2,V3 conf=0.8 cross=over percmin=0.5 tol=10% covplot=1 outplot=1 out=samples/SRS011061.ab_V2,V3
+perl riboMap.pl file=samples/SRS011061.16S.rdp var=V5-V6 conf=0.8 cross=over percmin=0.5 tol=10% covplot=1 outplot=1 out=samples/SRS011061.ab_V5-V6
