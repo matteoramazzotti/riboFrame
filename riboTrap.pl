@@ -1,4 +1,3 @@
-
 #!/usr/bin/perl
 # (c) matteo.ramazzotti@unifi.it
 # part of the riboFrame v1.0 package
